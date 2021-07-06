@@ -1,35 +1,50 @@
+// #################################
+// ## Iteration 1: The game logic ##
+// #################################
+
 class Hangman {
   constructor(words) {
     this.words = words;
-    // ... your code goes here
+    this.secretWord = this.pickWord();
+    this.letters = [];
+    this.guessedLetters = '';
+    this.errorsLeft = 10;
   }
 
+  // return a random word from the words array
   pickWord() {
-    // ... your code goes here
+    return String(this.words[Math.floor(Math.random() * this.words.length)]);
   }
 
+  // check if the pressed key is a letter
   checkIfLetter(keyCode) {
-    // ... your code goes here
+    return ((keyCode > 64) && (keyCode < 91));
   }
 
+  // check if the letter has already been pressed
   checkClickedLetters(letter) {
-    // ... your code goes here
+    return !this.letters.includes(letter);
   }
 
+  // add the correct letter to guessedLetters
   addCorrectLetter(letter) {
-    // ... your code goes here
+    return this.guessedLetters += letter;
   }
 
+  // decrement tries + push letter into tried letters array
   addWrongLetter(letter) {
-    // ... your code goes here
+    if (!this.letters.includes(letter)) { this.letters.push(letter) };
+    return this.errorsLeft--;
   }
 
+  // check if there are still tries left
   checkGameOver() {
-    // ... your code goes here
+    return !this.errorsLeft > 0;
   }
 
+  // check if the user won
   checkWinner() {
-    // ... your code goes here
+    return (this.guessedLetters.length === this.secretWord.length);
   }
 }
 
