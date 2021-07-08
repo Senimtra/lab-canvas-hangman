@@ -34,7 +34,10 @@ class HangmanCanvas {
     }
     // print the guessed letter's occurances 
     indexes.forEach((letter) => this.context.fillText(hangman.secretWord[letter].toUpperCase(), (255 + (50 * letter)), 745));
-    hangman.checkWinner();
+    if (hangman.checkWinner()) {
+      hangman.errorsLeft = 0;
+      this.winner();
+    }
   }
 
   // draw the wrong letters array
@@ -47,8 +50,9 @@ class HangmanCanvas {
       this.context.clearRect(550, 270, 180, 36);
       this.context.fillText(`Tries left: ${hangman.errorsLeft}`, 550, 300);
     }
-    // check if the player lost
-    hangman.checkGameOver();
+    if (hangman.checkGameOver()) {
+      this.gameOver();
+    }
   }
 
   // draw the hangman's lines
@@ -60,53 +64,82 @@ class HangmanCanvas {
         break;
       case 2:
         this.context.lineWidth = 2;
+        this.context.beginPath();
         this.context.moveTo(80, 755);
         this.context.lineTo(145, 720);
         this.context.stroke();
         break;
       case 3:
+        this.context.beginPath();
+        this.context.moveTo(145, 720);
         this.context.lineTo(210, 755);
         this.context.stroke();
         break;
       case 4:
+        this.context.beginPath();
         this.context.moveTo(145, 720);
         this.context.lineTo(145, 150);
         this.context.stroke();
         break;
       case 5:
+        this.context.beginPath();
+        this.context.moveTo(145, 150);
         this.context.lineTo(375, 150);
         this.context.stroke();
         break;
       case 6:
+        this.context.beginPath();
+        this.context.moveTo(375, 150);
         this.context.lineTo(375, 200);
         this.context.stroke();
         break;
       case 7:
+        this.context.beginPath();
         this.context.moveTo(415, 240);
         this.context.arc(375, 240, 40, 0, Math.PI * 2);
         this.context.stroke();
         break;
       case 8:
+        this.context.beginPath();
         this.context.moveTo(375, 280);
         this.context.lineTo(375, 475);
         this.context.stroke();
         break;
       case 9:
+        this.context.beginPath();
+        this.context.moveTo(375, 475);
         this.context.lineTo(320, 550);
         this.context.stroke();
         break;
       case 10:
+        this.context.beginPath();
         this.context.moveTo(375, 475);
         this.context.lineTo(430, 550);
         this.context.stroke();
     }
   }
 
+  // ###############################
+  // ## Bonus Iteration 3: Images ##
+  // ###############################
+
+  // draw the game over image
   gameOver() {
-    // ... your code goes here
+    const gameOverImg = new Image();
+    gameOverImg.src = './images/gameover.png';
+    gameOverImg.addEventListener('load', () => {
+      this.context.clearRect(0, 0, 1000, 700);
+      this.context.drawImage(gameOverImg, 200, 100, 600, 500);
+    });
   }
 
+  // draw the winner image
   winner() {
-    // ... your code goes here
+    const winnerImg = new Image();
+    winnerImg.src = './images/awesome.png';
+    winnerImg.addEventListener('load', () => {
+      this.context.clearRect(0, 0, 1000, 700);
+      this.context.drawImage(winnerImg, 200, 100, 600, 500);
+    });
   }
 }

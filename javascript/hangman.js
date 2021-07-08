@@ -44,7 +44,13 @@ class Hangman {
 
   // check if the user won
   checkWinner() {
-    return (this.guessedLetters.length === this.secretWord.length);
+    let letterCount = 0;
+    for (let i = 0; i < this.secretWord.length; i++) {
+      if (this.guessedLetters.includes(this.secretWord[i])) {
+        letterCount++;
+      }
+    }
+    return letterCount === this.secretWord.length;
   }
 }
 
